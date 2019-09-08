@@ -6,7 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class Flat(models.Model):
     created_at = models.DateTimeField("Когда создано объявление", default=timezone.now, db_index=True)
-    
+
     description = models.TextField("Текст объявления", blank=True)
     price = models.IntegerField("Цена квартиры", db_index=True)
 
@@ -27,6 +27,7 @@ class Flat(models.Model):
     liked_by = models.ManyToManyField(
         User, verbose_name="Кто лайкнул",
         related_name='liked_flat',
+        blank=True,
     )
 
     def __str__(self):
@@ -53,6 +54,7 @@ class Owner(models.Model):
     flats = models.ManyToManyField(
         Flat, verbose_name="Квартиры в собственности",
         related_name="owners",
+        blank=True,
     )
 
     def __str__(self):
