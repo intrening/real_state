@@ -8,19 +8,11 @@ def migrate_owners(apps, schema_editor):
     Owner = apps.get_model('property', 'Owner')
 
     for flat in Flat.objects.all():
-        try:
-            owner = Owner.objects.get(fio=flat.owner)
-            owner.flats.add(flat)
-
-        except ObjectDoesNotExist:
-            owner = Owner.objects.create(
-                fio=flat.owner,
-                phonenumber=flat.owners_phonenumber,
-                phone_pure=flat.owner_phone_pure,
-            )
-            owner.save()
-            owner.flats.add(flat)
-            owner.save()
+        owner = Owner.objects.get_or_create(fio=flat.owner)
+        owner.phonenumber=flat.owners_phonenumber,
+        owner.phone_pure=flat.owner_phone_pure,
+        owner.flats.add(flat)
+        owner.save()
 
 class Migration(migrations.Migration):
 
