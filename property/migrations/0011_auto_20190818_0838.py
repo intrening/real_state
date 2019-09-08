@@ -9,8 +9,8 @@ def migrate_owners(apps, schema_editor):
 
     for flat in Flat.objects.all():
         owner = Owner.objects.get_or_create(fio=flat.owner)
-        owner.phonenumber=flat.owners_phonenumber,
-        owner.phone_pure=flat.owner_phone_pure,
+        owner.phonenumber = flat.owners_phonenumber,
+        owner.phone_pure = flat.owner_phone_pure,
         owner.flats.add(flat)
         owner.save()
 
